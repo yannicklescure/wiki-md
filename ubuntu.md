@@ -14,7 +14,7 @@ If asked "Do you want to change your default shell to zsh?", press `Y`
 
 ### Custom plugins
 
-### aptupdate
+#### aptupdate
 
 Update your system with the terminal by calling `aptupdate`.
 
@@ -77,3 +77,57 @@ Now, to update your applications using the terminal, execute the following comma
 ```bash
 aptupdate
 ```
+
+## Google Chrome
+
+In a terminal execute the following command:
+
+```bash
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+sudo apt install ./google-chrome-stable_current_amd64.deb
+
+```
+
+
+## Other applications
+
+### From apt
+
+- Gimp
+- Libre Office
+- FileZilla
+
+```bash
+sudo apt install gimp libreoffice filezilla
+```
+
+### From [flathub](https://flathub.org/home)
+
+- [Audacity](https://www.audacityteam.org/)
+- [Audacious](https://audacious-media-player.org/)
+- [Vlc](https://www.videolan.org/vlc/)
+- [Insomnia](https://insomnia.rest/)
+- [KdeNlive](https://kdenlive.org/en/)
+- [Telegram](https://desktop.telegram.org/)
+- [Signal](https://signal.org/)
+- [Gcolor3](https://www.hjdskes.nl/projects/gcolor3/)
+- [Video Trimmer](https://gitlab.gnome.org/YaLTeR/video-trimmer)
+- [Extension Manager](https://github.com/mjakeman/extension-manager)
+
+```bash
+flatpak install flathub org.audacityteam.Audacity
+flatpak install flathub org.atheme.audacious
+flatpak install flathub org.videolan.VLC
+flatpak install flathub rest.insomnia.Insomnia
+flatpak install flathub org.kde.kdenlive
+flatpak install flathub org.telegram.desktop
+flatpak install flathub org.signal.Signal
+flatpak install flathub nl.hjdskes.gcolor3
+flatpak install flathub org.gnome.gitlab.YaLTeR.VideoTrimmer
+flatpak install flathub com.mattjakeman.ExtensionManager
+```
+
+## GNOME Shell Extensions
+
+- [Caffeine](https://extensions.gnome.org/extension/517/caffeine/)
+- [Sound Input & Output Device Chooser](https://extensions.gnome.org/extension/906/sound-output-device-chooser/)
