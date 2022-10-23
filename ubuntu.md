@@ -40,36 +40,37 @@ Result should look like that:
 #!/bin/zsh
 
 aptupdate() {
-    TEXT_RESET='\e[0m'
-    TEXT_YELLOW='\e[0;33m'
-    TEXT_RED_B='\e[1;31m'
+  TEXT_RESET='\e[0m'
+  TEXT_YELLOW='\e[0;33m'
+  TEXT_RED_B='\e[1;31m'
 
-    sudo apt update
-    echo -e
-    echo 'APT update finished...'
-    echo -e
+  sudo apt update
+  echo -e $TEXT_YELLOW
+  echo 'APT update finished...'
+  echo -e $TEXT_RESET
 
-    # sudo apt dist-upgrade
-    # echo -e
-    # echo 'APT distributive upgrade finished...'
-    # echo -e
+  # sudo apt dist-upgrade
+  # echo -e $TEXT_YELLOW
+  # echo 'APT distributive upgrade finished...'
+  # echo -e $TEXT_RESET
 
-    sudo apt -y upgrade
-    echo -e
-    echo 'APT upgrade finished...'
-    echo -e
+  sudo apt -y upgrade
+  echo -e $TEXT_YELLOW
+  echo 'APT upgrade finished...'
+  echo -e $TEXT_RESET
 
-    sudo apt -y autoremove
-    echo -e
-    echo 'APT auto remove finished...'
-    echo -e
+  sudo apt -y autoremove
+  echo -e $TEXT_YELLOW
+  echo 'APT auto remove finished...'
+  echo -e $TEXT_RESET
 
-    if [ -f /var/run/reboot-required ]; then
-        echo -e
-        echo 'Reboot required!'
-        echo -e
-    fi
+  if [ -f /var/run/reboot-required ]; then
+    echo -e $TEXT_RED_B
+    echo 'Reboot required!'
+    echo -e $TEXT_RESET
+  fi
 }
+
 ```
 
 Now, to update your applications using the terminal, execute the following command:
