@@ -2,8 +2,7 @@
 In a terminal execute the following command:
 
 ```bash
-touch nord-vpn.zsh
-nano nord-vpn.zsh
+nano nordvpn.zsh
 ```
 
 Copy-paste the following script:
@@ -22,7 +21,7 @@ settings() {
   timeout 5s nordvpn set notify disabled
   timeout 5s nordvpn set autoconnect enabled
   timeout 5s nordvpn set dns 103.86.96.100 103.86.99.100
-  timeout 5s nordvpn whitelist add subnet 10.0.0.0/24 #my local subnet
+  timeout 5s nordvpn whitelist add subnet 192.168.1.0/24 #my local subnet
   timeout 5s nordvpn whitelist add ports 137 139 #NetBIOS
   timeout 5s nordvpn whitelist add ports 443 445 #HTTP over SSL, MSFT DS
   timeout 5s nordvpn whitelist add port 143 #IMAP4
