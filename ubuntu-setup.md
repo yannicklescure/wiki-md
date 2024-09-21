@@ -1,5 +1,11 @@
 # Ubuntu setup
 
+You will find below some useful instructions to set up your computer.
+
+Let's start :rocket:
+
+## Le Wagon setup
+
 Before anything, I recommend following the [Le Wagon setup](https://github.com/lewagon/setup/) guide.
 
 ## Oh-my-zsh

@@ -1,8 +1,4 @@
-# VS Code add-ons
-
-Let's install some useful extensions to VS Code.
-
-## Extensions
+# Useful extensions for VS Code
 
 Here is a good list of extensions:
 
@@ -27,7 +23,7 @@ Here is a good list of extensions:
 
 Copy-paste the following commands in your terminal:
 
-```
+```bash
 code --install-extension ms-vscode.sublime-keybindings
 code --install-extension emmanuelbeziat.vscode-great-icons
 code --install-extension github.github-vscode-theme
