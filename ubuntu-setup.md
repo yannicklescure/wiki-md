@@ -1,5 +1,7 @@
 # Ubuntu setup
 
+Before anything, I recommend following the [Le Wagon setup](https://github.com/lewagon/setup/) guide.
+
 ## Oh-my-zsh
 
 Let's install the `zsh` plugin [Oh My Zsh](https://ohmyz.sh/).
