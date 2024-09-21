@@ -20,6 +20,54 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 
 If asked "Do you want to change your default shell to zsh?", press `Y`
 
+### Display full path
+
+To display `~` instead of the full path `/home/<username>` in your Zsh prompt while still keeping the trailing slash, you can use the `%~` symbol, which represents the current directory but replaces the home directory with `~`.
+
+#### Modify Your Prompt
+
+Here’s how to adjust your existing prompt definition:
+
+1. **Open your `.zshrc` file**:
+
+   ```bash
+   nano ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
+   ```
+
+2. **Update the `PROMPT`** to use `%~` instead of `%c`:
+
+   ```bash
+   PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ ) %{$fg[cyan]%}%~%{$reset_color%}\$ "
+   PROMPT+='$(git_prompt_info)'
+   ```
+
+#### Explanation of Changes
+
+- **`%~`**: Displays the current directory, replacing `/home/<username>` with `~`.
+- **`/%`**: Adds the trailing slash after `~` if you are in the home directory.
+
+#### Apply the Changes
+
+After saving your changes, reload your configuration:
+
+```bash
+source ~/.zshrc
+```
+
+#### Final Result
+
+Now, your prompt will show `~` when you are in your home directory:
+
+```bash
+ ➜ ~$
+```
+
+When you're in other directories, it will show the full path:
+
+```bash
+ ➜ /path/to/other/directory$
+```
+
 ### Custom plugins
 
 #### update
