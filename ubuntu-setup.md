@@ -22,24 +22,24 @@ If asked "Do you want to change your default shell to zsh?", press `Y`
 
 ### Custom plugins
 
-#### aptupdate
+#### update
 
-Update your system with the terminal by calling `aptupdate`.
+Update your system with the terminal by calling `update`.
 
 In a terminal execute the following command:
 
 ```bash
-mkdir ~/.oh-my-zsh/custom/plugins/aptupdate
-touch ~/.oh-my-zsh/custom/plugins/aptupdate/aptupdate.plugin.zsh
-x=~/.oh-my-zsh/custom/plugins/aptupdate/aptupdate.plugin.zsh; echo "#\!/bin/zsh\n\naptupdate() {\n\tTEXT_RESET='\\\e[0m'\n\tTEXT_YELLOW='\\\e[0;33m'\n\tTEXT_RED_B='\\\e[1;31m'\n\n\tsudo apt update\n\techo -e \$TEXT_YELLOW\n\techo 'APT update finished...'\n\techo -e \$TEXT_RESET\n\n\t# sudo apt dist-upgrade\n\t# echo -e \$TEXT_YELLOW\n\t# echo 'APT distributive upgrade finished...'\n\t# echo -e \$TEXT_RESET\n\n\tsudo apt -y upgrade\n\techo -e \$TEXT_YELLOW\n\techo 'APT upgrade finished...'\n\techo -e \$TEXT_RESET\n\n\tsudo apt -y autoremove\n\techo -e \$TEXT_YELLOW\n\techo 'APT auto remove finished...'\n\techo -e \$TEXT_RESET\n\n\tif [ -f /var/run/reboot-required ]; then\n\t\techo -e \$TEXT_RED_B\n\t\techo 'Reboot required!'\n\t\techo -e \$TEXT_RESET\n\tfi\n}\n" >> "${=x}"
-l=$(grep -o "^plugins=.*[^\)]" ~/.zshrc | cut -d : -f 1); sed -i -e "s/$l/$l aptupdate/g" ~/.zshrc
+mkdir ~/.oh-my-zsh/custom/plugins/update
+touch ~/.oh-my-zsh/custom/plugins/update/update.plugin.zsh
+x=~/.oh-my-zsh/custom/plugins/update/update.plugin.zsh; echo "#\!/bin/zsh\n\nupdate() {\n\tTEXT_RESET='\\\e[0m'\n\tTEXT_YELLOW='\\\e[0;33m'\n\tTEXT_RED_B='\\\e[1;31m'\n\n\tsudo apt update\n\techo -e \$TEXT_YELLOW\n\techo 'APT update finished...'\n\techo -e \$TEXT_RESET\n\n\t# sudo apt dist-upgrade\n\t# echo -e \$TEXT_YELLOW\n\t# echo 'APT distributive upgrade finished...'\n\t# echo -e \$TEXT_RESET\n\n\tsudo apt -y upgrade\n\techo -e \$TEXT_YELLOW\n\techo 'APT upgrade finished...'\n\techo -e \$TEXT_RESET\n\n\tsudo apt -y autoremove\n\techo -e \$TEXT_YELLOW\n\techo 'APT auto remove finished...'\n\techo -e \$TEXT_RESET\n\n\tif [ -f /var/run/reboot-required ]; then\n\t\techo -e \$TEXT_RED_B\n\t\techo 'Reboot required!'\n\t\techo -e \$TEXT_RESET\n\tfi\n}\n" >> "${=x}"
+l=$(grep -o "^plugins=.*[^\)]" ~/.zshrc | cut -d : -f 1); sed -i -e "s/$l/$l update/g" ~/.zshrc
 source ~/.zshrc
 ```
 
 To see the result, in a terminal execute the following command:
 
 ```bash
-cat ~/.oh-my-zsh/custom/plugins/aptupdate/aptupdate.plugin.zsh
+cat ~/.oh-my-zsh/custom/plugins/update/update.plugin.zsh
 ```
 
 Result should look like that:
@@ -47,7 +47,7 @@ Result should look like that:
 ```zsh
 #!/bin/zsh
 
-aptupdate() {
+update() {
   TEXT_RESET='\e[0m'
   TEXT_YELLOW='\e[0;33m'
   TEXT_RED_B='\e[1;31m'
@@ -84,7 +84,7 @@ aptupdate() {
 Now, to update your applications using the terminal, execute the following command:
 
 ```bash
-aptupdate
+update
 ```
 
 ## Google Chrome
