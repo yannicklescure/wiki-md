@@ -41,6 +41,13 @@ You need to add the supported video file types to the `config.php` file in the N
   ),
   ```
 
+- Update nexcloud config:
+
+  ```bash
+  sudo nextcloud.occ maintenance:mimetype:update-js
+  sudo nextcloud.occ maintenance:mimetype:update-db
+  ```
+
   This configuration enables video preview generation for MP4, AVI, and other file formats.
 
 ### Increase Memory Limit for Previews (Optional)
