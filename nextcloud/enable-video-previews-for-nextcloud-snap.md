@@ -68,10 +68,21 @@ sudo snap set nextcloud php.memory-limit=4096M
 
 ### Resolving ffmpeg path
 
-`ffmpeg` is installed in the usual place (/usr/bin/ffmpeg) which is included in the PATH variables you could find. Yet Nextcloud isn't generating previews. The solution is to explicitly point it towards ffmpeg in config.php by setting `'preview_ffmpeg_path' => '/usr/bin/ffmpeg'`
+- Create `/var/snap/nextcloud/bin/` directory
+
+- Google for ffmpeg static build (has included static libraries). I used https://johnvansickle.com/ffmpeg/
+
+- Unpack ffmpeg and ffprobe into `/var/snap/nextcloud/bin/`
+
+  ```bash
+  tar -xvJf ffmpeg-release-amd64-static.tar.xz
+  ```
+
+`ffmpeg` is now located at `/var/snap/nextcloud/bin/ffmpeg`. Yet Nextcloud isn't generating previews. The solution is to explicitly point it towards ffmpeg in config.php by setting:
+
 
 ```php
-'preview_ffmpeg_path' => '/usr/bin/ffmpeg'
+'preview_ffmpeg_path' => '/var/snap/nextcloud/bin/ffmpeg'
 ```
 
 ### Install the Preview Generator App
