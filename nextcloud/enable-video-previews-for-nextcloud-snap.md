@@ -6,11 +6,17 @@ To enable video previews in your Nextcloud instance, you need to ensure that a f
 
 ### Install FFmpeg
 
-The Nextcloud Snap package uses external tools like `ffmpeg` to generate video previews. To install `ffmpeg`, run the following command on your Ubuntu server:
+The Nextcloud Snap package uses external tools like `ffmpeg` to generate video previews. To install `ffmpeg`, follow those steps:
 
-```bash
-sudo apt install ffmpeg
-```
+- Create `/var/snap/nextcloud/bin/` directory
+
+- Google for ffmpeg static build (has included static libraries). I used [https://johnvansickle.com/ffmpeg/](https://johnvansickle.com/ffmpeg/)
+
+- Unpack ffmpeg and ffprobe into `/var/snap/nextcloud/bin/`
+
+  ```bash
+  tar -xvJf ffmpeg-release-amd64-static.tar.xz
+  ```
 
 ### Edit `config.php`
 
@@ -67,16 +73,6 @@ sudo snap set nextcloud php.memory-limit=4096M
 ```
 
 ### Resolving ffmpeg path
-
-- Create `/var/snap/nextcloud/bin/` directory
-
-- Google for ffmpeg static build (has included static libraries). I used https://johnvansickle.com/ffmpeg/
-
-- Unpack ffmpeg and ffprobe into `/var/snap/nextcloud/bin/`
-
-  ```bash
-  tar -xvJf ffmpeg-release-amd64-static.tar.xz
-  ```
 
 `ffmpeg` is now located at `/var/snap/nextcloud/bin/ffmpeg`. Yet Nextcloud isn't generating previews. The solution is to explicitly point it towards ffmpeg in config.php by setting:
 
