@@ -10,12 +10,23 @@ The Nextcloud Snap package uses external tools like `ffmpeg` to generate video p
 
 - Create `/var/snap/nextcloud/bin/` directory
 
+  ```bash
+  sudo mkdir /var/snap/nextcloud/bin/
+  ```
+
 - Google for ffmpeg static build (has included static libraries). I used [https://johnvansickle.com/ffmpeg/](https://johnvansickle.com/ffmpeg/)
+
+  ```bash
+  wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
+  ```
 
 - Unpack ffmpeg and ffprobe into `/var/snap/nextcloud/bin/`
 
   ```bash
   tar -xvJf ffmpeg-release-amd64-static.tar.xz
+  cd ffmpeg-7.0.2-amd64-static
+  sudo mv ffmpeg /var/snap/nextcloud/bin/
+  sudo mv ffprobe /var/snap/nextcloud/bin/
   ```
 
 ### Edit `config.php`
