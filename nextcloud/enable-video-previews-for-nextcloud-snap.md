@@ -129,3 +129,4 @@ After these steps, Nextcloud should generate video previews for supported file f
 - [https://anto.online/how-to-enable-video-previews-for-nextcloud/](https://anto.online/how-to-enable-video-previews-for-nextcloud/)
 - [https://help.nextcloud.com/t/thumbnail-preview-generation/34123/14](https://help.nextcloud.com/t/thumbnail-preview-generation/34123/14)
 - [https://docs.nextcloud.com/server/stable/admin_manual/configuration_server/config_sample_php_parameters.html#preview-ffmpeg-path](https://docs.nextcloud.com/server/stable/admin_manual/configuration_server/config_sample_php_parameters.html#preview-ffmpeg-path)
+- [https://github.com/nextcloud-snap/nextcloud-snap/issues/1046#issuecomment-1374427458](https://github.com/nextcloud-snap/nextcloud-snap/issues/1046#issuecomment-1374427458)
