@@ -28,13 +28,19 @@ To display `~` instead of the full path `/home/<username>` in your Zsh prompt wh
 
 Here’s how to adjust your existing prompt definition:
 
-1. **Open your `.zshrc` file**:
+- Open your `.zshrc` file:
 
    ```bash
    nano ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
    ```
 
-2. **Update the `PROMPT`** to use `%~` instead of `%c`:
+- Update the `plugins`:
+
+  ```bash
+  plugins=(git gitfast last-working-dir common-aliases zsh-syntax-highlighting history-substring-search pyenv ssh-agent update newbranch commit)
+  ```
+
+- Update the `PROMPT` to use `%~` instead of `%c`:
 
    ```bash
    PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ ) %{$fg[cyan]%}%~%{$reset_color%}\$ "
