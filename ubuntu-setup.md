@@ -26,26 +26,20 @@ To display `~` instead of the full path `/home/<username>` in your Zsh prompt wh
 
 #### Modify Your Prompt
 
-Here’s how to adjust your existing prompt definition:
+Here's how to adjust your existing prompt definition:
 
-- Open your `.zshrc` file:
-
-   ```bash
-   nano ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
-   ```
-
-- Update the `plugins`:
+- Open your `robbyrussell.zsh-theme` file:
 
   ```bash
-  plugins=(git gitfast last-working-dir common-aliases zsh-syntax-highlighting history-substring-search pyenv ssh-agent update newbranch commit)
+  nano ~/.oh-my-zsh/themes/robbyrussell.zsh-theme
   ```
 
 - Update the `PROMPT` to use `%~` instead of `%c`:
 
-   ```bash
-   PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ ) %{$fg[cyan]%}%~%{$reset_color%}\$ "
-   PROMPT+='$(git_prompt_info)'
-   ```
+  ```bash
+  PROMPT="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ ) %{$fg[cyan]%}%~%{$reset_color%}\$ "
+  PROMPT+='$(git_prompt_info)'
+  ```
 
 #### Explanation of Changes
 
@@ -57,7 +51,7 @@ Here’s how to adjust your existing prompt definition:
 After saving your changes, reload your configuration:
 
 ```bash
-source ~/.zshrc
+exec zsh
 ```
 
 #### Final Result
@@ -73,6 +67,32 @@ When you're in other directories, it will show the full path:
 ```bash
  ➜ /path/to/other/directory$
 ```
+
+### Additional plugins
+
+- Visit those links to install additional plugins:
+
+  - [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
+  - [zsh-completions](https://github.com/zsh-users/zsh-completions)
+  - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
+  - [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search)
+
+- Update the `plugins` line in the `.zshrc` file:
+
+  ```bash
+  plugins=(
+    git
+    gitfast
+    last-working-dir
+    common-aliases
+    zsh-syntax-highlighting
+    zsh-completions
+    zsh-autosuggestions
+    history-substring-search
+    pyenv
+    ssh-agent
+  )
+  ```
 
 ### Custom plugins
 
@@ -150,7 +170,6 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo apt install ./google-chrome-stable_current_amd64.deb
 
 ```
-
 
 ## Other applications
 
