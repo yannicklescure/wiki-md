@@ -1,30 +1,41 @@
 # How to Install and Configure Collabora Online on a Separate Server for Nextcloud Snap
 
-In this guide, we’ll walk through installing **Collabora Online** on a separate Ubuntu server and
+In this guide, we’ll walk through installing Collabora Online on a separate Ubuntu server and
 integrating it with a Nextcloud Snap instance. This setup allows both Nextcloud and Collabora to run
 on the same network without conflict. The process includes configuring Apache, setting up firewall
 rules, and securing Collabora with SSL. Here's how to do it.
-
-First, install **Collabora Online** on a separate Ubuntu server.
 
 ## 1. Collabora Online installation
 
 ### Add Collabora Repository
 
-- Add the Collabora package repository to your system:
+- Import the Collabora CODE signing key:
 
-```bash
-sudo apt install gnupg2
-sudo wget https://collaboraoffice.com/downloads/gpg/collaboraonline.asc -O- | sudo apt-key add -
-sudo echo 'deb https://www.collaboraoffice.com/repos/CollaboraOnline/CODE-ubuntu2204 ./' | sudo tee /etc/apt/sources.list.d/collabora.list
-sudo apt update
-```
+  ```bash
+  cd /usr/share/keyrings
+  sudo wget https://collaboraoffice.com/downloads/gpg/collaboraonline-release-keyring.gpg
+  ```
 
-### Install Collabora Online
+- Create a file for the Collabora CODE package repository:
 
-```bash
-sudo apt install coolwsd code-brand
-```
+  ```bash
+  sudo nano /etc/apt/sources.list.d/collaboraonline.sources
+  ```
+
+- Add the repository configuration:
+
+  ```bash
+  Types: deb
+  URIs: https://www.collaboraoffice.com/repos/CollaboraOnline/CODE-deb
+  Suites: ./
+  Signed-By: /usr/share/keyrings/collaboraonline-release-keyring.gpg
+  ```
+
+- Install the CODE packages:
+
+  ```bash
+  sudo apt install coolwsd code-brand
+  ```
 
 ## Configure Collabora Online WebSocket Daemon
 
@@ -36,9 +47,22 @@ which is not easy to read and edit. We can use the `coolconfig` tool to change c
 - Create a bash script `collabora.sh` that you'll place into `/etc/init.d/` folder.
 
   ```bash
+  sudo nano /etc/init.d/collabora.sh
+  ```
+
+  ```bash
   coolconfig set ssl.enable false
   coolconfig set ssl.termination true
+  coolconfig set net.proto IPv4
+  coolconfig set net.listen 127.0.0.1
   coolconfig set storage.wopi.host cloud.yourdomain.com # nextcloud url
+  # (Option) If you use several domains
+  # coolconfig set storage.wopi.alias_groups[@mode] groups
+  # coolconfig set storage.wopi.alias_groups.group[0].host[@allow] true
+  # coolconfig set storage.wopi.alias_groups.group[0].host cloud.yourdomain.com
+  # coolconfig set storage.wopi.alias_groups.group[0].alias[0] https://cloud.yourdomain1.com
+  # coolconfig set storage.wopi.alias_groups.group[0].alias[1] https://collabora.yourdomain.com
+  # coolconfig set storage.wopi.alias_groups.group[0].alias[2] https://collabora.yourdomain1.com
   systemctl restart coolwsd
   sleep 10
   systemctl status coolwsd
@@ -49,26 +73,25 @@ which is not easy to read and edit. We can use the `coolconfig` tool to change c
 - Make the script executable
 
   ```bash
-  sudo su
-  chmod +x /etc/init.d/collabora.sh
+  sudo chmod +x /etc/init.d/collabora.sh
   ```
 
 - Add a cron job (as root)
 
   ```bash
-  crontab -e
+  sudo crontab -e
   ```
 
   At the end of the file, add the following instruction:
 
   ```bash
-  @reboot sh /etc/init.d/collabora.sh
+  @reboot /etc/init.d/collabora.sh
   ```
 
 - Test if everything works as expected:
 
   ```bash
-  sudo sh /etc/init.d/collabora.sh
+  sudo /etc/init.d/./collabora.sh
   ```
 
 These steps ensure that changes made to Collabora persist after each update.
@@ -93,14 +116,18 @@ listening ports.
 ```bash
 <VirtualHost *:8080>
   ServerName collabora.yourdomain.com
+  ServerAlias collabora.yourdomain1.com
+
   Redirect permanent / https://collabora.yourdomain.com:8443/
   RewriteEngine on
-  RewriteCond %{SERVER_NAME} =collabora.yourdomain.com
+  RewriteCond %{SERVER_NAME} =collabora.yourdomain.com [OR]
+  RewriteCond %{SERVER_NAME} =collabora.yourdomain1.com
   RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
 </VirtualHost>
 
 <VirtualHost *:8443>
   ServerName collabora.yourdomain.com
+  ServerAlias collabora.yourdomain1.com
 
   SSLEngine on
   SSLCertificateFile /etc/letsencrypt/live/yourdomain.com/fullchain.pem
@@ -114,6 +141,8 @@ listening ports.
 
   # keep the host
   ProxyPreserveHost On
+
+  Header always unset X-Frame-Options
 
   # static html, js, images, etc. served from coolwsd
   # loleaflet/browser is the client part of Collabora Online
@@ -139,7 +168,6 @@ listening ports.
   # Download as, Fullscreen presentation and Image upload operations
   ProxyPass           /cool http://127.0.0.1:9980/cool
   ProxyPassReverse    /cool http://127.0.0.1:9980/cool
-
 </VirtualHost>
 ```
 
@@ -235,9 +263,15 @@ By configuring Apache to listen on port **8443** for Collabora, opening the nece
 firewall, and securing the connection with SSL, you ensure that both services can function without
 conflicts.
 
+<hr />
+
 ### Sources
 
 - [https://www.linuxbabe.com/ubuntu/integrate-collabora-onlinenextcloud-without-docker](https://www.linuxbabe.com/ubuntu/integrate-collabora-onlinenextcloud-without-docker)
 - [https://httpd.apache.org/docs/2.4/bind.html](https://httpd.apache.org/docs/2.4/bind.html)
 - [https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu](https://www.digitalocean.com/community/tutorials/how-to-set-up-a-firewall-with-ufw-on-ubuntu)
 - [https://www.digitalocean.com/community/tutorials/how-to-acquire-a-let-s-encrypt-certificate-using-dns-validation-with-acme-dns-certbot-on-ubuntu-18-04](https://www.digitalocean.com/community/tutorials/how-to-acquire-a-let-s-encrypt-certificate-using-dns-validation-with-acme-dns-certbot-on-ubuntu-18-04)
+- [https://musaamin.web.id/how-to-install-collabora-office-ubuntu2404/](https://musaamin.web.id/how-to-install-collabora-office-ubuntu2404/)
+- [https://sdk.collaboraonline.com/docs/installation/Configuration.html](https://sdk.collaboraonline.com/docs/installation/Configuration.html)
+
+</div>
