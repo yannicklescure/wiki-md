@@ -6,6 +6,13 @@ To help streamline this process, I developed a simple yet effective Bash script 
 
 In this blog post, I’ll walk you through how the script works, the tools required for setup, and how you can customize it to suit your specific needs. Whether you're managing a personal Nextcloud server or handling large amounts of data for a team, this solution will make your media files more manageable and your Nextcloud Talk experience smoother. Let’s dive in!
 
+## Pre-installation
+
+```bash
+sudo apt update
+sudo apt install inotify-tools
+```
+
 ## Script installation
 
 ```bash
