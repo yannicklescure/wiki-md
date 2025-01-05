@@ -61,7 +61,7 @@ resize_video() {
 
     echo "$(date '+%Y-%m-%d %H:%M:%S') - $BACKUP_FILE" >> "$LOG_FILE"
 
-    ffmpeg -i "$BACKUP_FILE" -vf "scale=-2:720" -c:v libx264 -crf 28 -preset fast -c:a aac -b>
+    ffmpeg -i "$BACKUP_FILE" -vf "scale=-2:720" -c:v libx264 -crf 28 -preset fast -c:a aac -b:a 128k -pix_fmt yuv420p "$FILE"
     echo "$(date '+%Y-%m-%d %H:%M:%S') - $FILE resized" >> "$LOG_FILE"
     nextcloud.occ files:scan --path="${USER_DIR}"
 }
@@ -109,7 +109,7 @@ for user_dir in "$NEXTCLOUD_DATA_DIR"/*/; do
     if [ -d "$TALK_DIR" ]; then
         monitor_directory "$TALK_DIR" "$USER_DIR" &
     else
-        echo "$(date '+%Y-%m-%d %H:%M:%S') - Talk directory not found for user in $user_dir, >
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Talk directory not found for user in $user_dir, skipping." >> "$LOG_FILE"
     fi
 done
 
