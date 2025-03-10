@@ -100,62 +100,72 @@ When you're in other directories, it will show the full path:
 
 Update your system with the terminal by calling `update`.
 
-In a terminal execute the following command:
+Create the following file:
 
 ```bash
-mkdir ~/.oh-my-zsh/custom/plugins/update
 touch ~/.oh-my-zsh/custom/plugins/update/update.plugin.zsh
-x=~/.oh-my-zsh/custom/plugins/update/update.plugin.zsh; echo "#\!/bin/zsh\n\nupdate() {\n\tTEXT_RESET='\\\e[0m'\n\tTEXT_YELLOW='\\\e[0;33m'\n\tTEXT_RED_B='\\\e[1;31m'\n\n\tsudo apt update\n\techo -e \$TEXT_YELLOW\n\techo 'APT update finished...'\n\techo -e \$TEXT_RESET\n\n\t# sudo apt dist-upgrade\n\t# echo -e \$TEXT_YELLOW\n\t# echo 'APT distributive upgrade finished...'\n\t# echo -e \$TEXT_RESET\n\n\tsudo apt -y upgrade\n\techo -e \$TEXT_YELLOW\n\techo 'APT upgrade finished...'\n\techo -e \$TEXT_RESET\n\n\tsudo apt -y autoremove\n\techo -e \$TEXT_YELLOW\n\techo 'APT auto remove finished...'\n\techo -e \$TEXT_RESET\n\n\tif [ -f /var/run/reboot-required ]; then\n\t\techo -e \$TEXT_RED_B\n\t\techo 'Reboot required!'\n\t\techo -e \$TEXT_RESET\n\tfi\n}\n" >> "${=x}"
-l=$(grep -o "^plugins=.*[^\)]" ~/.zshrc | cut -d : -f 1); sed -i -e "s/$l/$l update/g" ~/.zshrc
-source ~/.zshrc
 ```
 
-To see the result, in a terminal execute the following command:
+Edit and add the following:
 
 ```bash
-cat ~/.oh-my-zsh/custom/plugins/update/update.plugin.zsh
-```
-
-Result should look like that:
-
-```zsh
 #!/bin/zsh
 
 update() {
-  TEXT_RESET='\e[0m'
-  TEXT_YELLOW='\e[0;33m'
-  TEXT_RED_B='\e[1;31m'
+	TEXT_RESET='\e[0m'
+	TEXT_YELLOW='\e[0;33m'
+	TEXT_RED_B='\e[1;31m'
 
-  sudo apt update
-  echo -e $TEXT_YELLOW
-  echo 'APT update finished...'
-  echo -e $TEXT_RESET
+	sudo snap refresh
 
-  # sudo apt dist-upgrade
-  # echo -e $TEXT_YELLOW
-  # echo 'APT distributive upgrade finished...'
-  # echo -e $TEXT_RESET
+	flatpak update -y
 
-  sudo apt -y upgrade
-  echo -e $TEXT_YELLOW
-  echo 'APT upgrade finished...'
-  echo -e $TEXT_RESET
+	sudo apt update
+	echo -e $TEXT_YELLOW
+	echo 'APT update finished...'
+	echo -e $TEXT_RESET
 
-  sudo apt -y autoremove
-  echo -e $TEXT_YELLOW
-  echo 'APT auto remove finished...'
-  echo -e $TEXT_RESET
+	# sudo apt dist-upgrade
+	# echo -e $TEXT_YELLOW
+	# echo 'APT distributive upgrade finished...'
+	# echo -e $TEXT_RESET
 
-  if [ -f /var/run/reboot-required ]; then
-    echo -e $TEXT_RED_B
-    echo 'Reboot required!'
-    echo -e $TEXT_RESET
-  fi
+	sudo apt -y upgrade
+	echo -e $TEXT_YELLOW
+	echo 'APT upgrade finished...'
+	echo -e $TEXT_RESET
+
+	sudo apt -y autoremove
+	echo -e $TEXT_YELLOW
+	echo 'APT auto remove finished...'
+	echo -e $TEXT_RESET
+
+	echo "Cleaning up package cache..."
+	sudo apt clean
+
+	echo "System update complete!"
+
+	if [ -f /var/run/reboot-required ]; then
+		echo -e $TEXT_RED_B
+		echo 'Reboot required!'
+		echo -e $TEXT_RESET
+	fi
 }
 
+# Add the update function to the shell
+alias update=update
 ```
 
-Now, to update your applications using the terminal, execute the following command:
+Update the `plugins` line in the `.zshrc` file:
+
+```bash
+plugins=(
+  ...
+  update
+)
+```
+
+Now, to update your applications in the terminal execute:
 
 ```bash
 update
@@ -180,10 +190,20 @@ sudo apt install ./google-chrome-stable_current_amd64.deb
 - FileZilla
 
 ```bash
-sudo apt install gimp libreoffice filezilla
+sudo apt install gimp libreoffice filezilla gnome-tweaks
 ```
 
-### From [flathub](https://flathub.org/home)
+### Flathub
+
+```bash
+sudo apt install flatpak
+sudo apt install gnome-software-plugin-flatpak
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+```
+
+Restart your computer!
+
+### Flathub applications [flathub](https://flathub.org/home)
 
 - [Audacity](https://www.audacityteam.org/)
 - [Audacious](https://audacious-media-player.org/)
@@ -197,19 +217,24 @@ sudo apt install gimp libreoffice filezilla
 - [Extension Manager](https://github.com/mjakeman/extension-manager)
 
 ```bash
-flatpak install flathub org.audacityteam.Audacity
-flatpak install flathub org.atheme.audacious
-flatpak install flathub org.videolan.VLC
-flatpak install flathub rest.insomnia.Insomnia
-flatpak install flathub org.kde.kdenlive
-flatpak install flathub org.telegram.desktop
-flatpak install flathub org.signal.Signal
-flatpak install flathub nl.hjdskes.gcolor3
-flatpak install flathub org.gnome.gitlab.YaLTeR.VideoTrimmer
+# Extension Manager
 flatpak install flathub com.mattjakeman.ExtensionManager
+# Audacity
+flatpak install flathub org.audacityteam.Audacity
+# Audacious music player
+flatpak install flathub org.atheme.audacious
+# VLC media player
+flatpak install flathub org.videolan.VLC
+# Kdenlive Video editor
+flatpak install flathub org.kde.kdenlive
+# Telegram
+flatpak install flathub org.telegram.desktop
+# Signal
+flatpak install flathub org.signal.Signal
+# Video Trimmer
+flatpak install flathub org.gnome.gitlab.YaLTeR.VideoTrimmer
 ```
 
 ## GNOME Shell Extensions
 
 - [Caffeine](https://extensions.gnome.org/extension/517/caffeine/)
-- [Sound Input & Output Device Chooser](https://extensions.gnome.org/extension/906/sound-output-device-chooser/)
