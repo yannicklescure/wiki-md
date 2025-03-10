@@ -205,16 +205,14 @@ Restart your computer!
 
 ### Flathub applications [flathub](https://flathub.org/home)
 
+- [Extension Manager](https://github.com/mjakeman/extension-manager)
 - [Audacity](https://www.audacityteam.org/)
 - [Audacious](https://audacious-media-player.org/)
 - [Vlc](https://www.videolan.org/vlc/)
-- [Insomnia](https://insomnia.rest/)
 - [KdeNlive](https://kdenlive.org/en/)
 - [Telegram](https://desktop.telegram.org/)
 - [Signal](https://signal.org/)
-- [Gcolor3](https://www.hjdskes.nl/projects/gcolor3/)
 - [Video Trimmer](https://gitlab.gnome.org/YaLTeR/video-trimmer)
-- [Extension Manager](https://github.com/mjakeman/extension-manager)
 
 ```bash
 # Extension Manager
