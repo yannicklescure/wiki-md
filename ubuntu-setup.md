@@ -112,44 +112,54 @@ Edit and add the following:
 #!/bin/zsh
 
 update() {
-	TEXT_RESET='\e[0m'
-	TEXT_YELLOW='\e[0;33m'
-	TEXT_RED_B='\e[1;31m'
+	local TEXT_RESET='\e[0m'
+	local TEXT_YELLOW='\e[0;33m'
+	local TEXT_GREEN='\e[0;32m'
+	local TEXT_RED='\e[1;31m'
+	local TEXT_CYAN='\e[0;36m'
 
-	sudo snap refresh
+	echo -e "${TEXT_CYAN}==> Updating system packages...${TEXT_RESET}"
 
-	flatpak update -y
-
-	sudo apt update
-	echo -e $TEXT_YELLOW
-	echo 'APT update finished...'
-	echo -e $TEXT_RESET
-
-	# sudo apt dist-upgrade
-	# echo -e $TEXT_YELLOW
-	# echo 'APT distributive upgrade finished...'
-	# echo -e $TEXT_RESET
-
-	sudo apt -y upgrade
-	echo -e $TEXT_YELLOW
-	echo 'APT upgrade finished...'
-	echo -e $TEXT_RESET
-
-	sudo apt -y autoremove
-	echo -e $TEXT_YELLOW
-	echo 'APT auto remove finished...'
-	echo -e $TEXT_RESET
-
-	echo "Cleaning up package cache..."
-	sudo apt clean
-
-	echo "System update complete!"
-
-	if [ -f /var/run/reboot-required ]; then
-		echo -e $TEXT_RED_B
-		echo 'Reboot required!'
-		echo -e $TEXT_RESET
+	# --- apt update ---
+	echo -e "${TEXT_YELLOW}\n[1/4] Refreshing package index...${TEXT_RESET}"
+	if sudo apt update; then
+		echo -e "${TEXT_GREEN}APT update finished.${TEXT_RESET}"
+	else
+		echo -e "${TEXT_RED}APT update failed. Aborting.${TEXT_RESET}"
+		return 1
 	fi
+
+	# --- apt upgrade ---
+	echo -e "${TEXT_YELLOW}\n[2/4] Upgrading packages...${TEXT_RESET}"
+	if sudo apt -y upgrade; then
+		echo -e "${TEXT_GREEN}APT upgrade finished.${TEXT_RESET}"
+	else
+		echo -e "${TEXT_RED}APT upgrade failed.${TEXT_RESET}"
+		return 1
+	fi
+
+	# --- apt autoremove ---
+	echo -e "${TEXT_YELLOW}\n[3/4] Removing unused packages...${TEXT_RESET}"
+	if sudo apt -y autoremove; then
+		echo -e "${TEXT_GREEN}APT autoremove finished.${TEXT_RESET}"
+	else
+		echo -e "${TEXT_RED}APT autoremove failed.${TEXT_RESET}"
+	fi
+
+	# --- apt clean ---
+	echo -e "${TEXT_YELLOW}\n[4/4] Cleaning package cache...${TEXT_RESET}"
+	if sudo apt -y clean; then
+		echo -e "${TEXT_GREEN}APT clean finished.${TEXT_RESET}"
+	else
+		echo -e "${TEXT_RED}APT clean failed.${TEXT_RESET}"
+	fi
+
+	# --- reboot check ---
+	if [ -f /var/run/reboot-required ]; then
+		echo -e "\n${TEXT_RED}Reboot required!${TEXT_RESET}"
+	fi
+
+	echo -e "${TEXT_CYAN}\n==> System update complete.${TEXT_RESET}"
 }
 
 # Add the update function to the shell
