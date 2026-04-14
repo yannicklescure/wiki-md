@@ -68,9 +68,9 @@ When you're in other directories, it will show the full path:
  ➜ /path/to/other/directory$
 ```
 
-### Additional plugins
+### Oh-my-zsh plugins
 
-- Visit those links to install additional plugins:
+- Visit those links to install useful plugins:
 
   - [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
   - [zsh-completions](https://github.com/zsh-users/zsh-completions)
