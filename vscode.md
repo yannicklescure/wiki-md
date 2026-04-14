@@ -18,6 +18,7 @@ Here is a good list of extensions:
 - [Live Share](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare)
 - [SQLite](https://marketplace.visualstudio.com/items?itemName=alexcvzz.vscode-sqlite)
 - [GitHub Theme](https://marketplace.visualstudio.com/items?itemName=github.github-vscode-theme)
+- [Markdown Preview Enhance](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced)
 
 ## Installation
 
@@ -39,5 +40,6 @@ code --install-extension oderwat.indent-rainbow
 code --install-extension wingrunr21.vscode-ruby
 code --install-extension esbenp.prettier-vscode
 code --install-extension DavidAnson.vscode-markdownlint
+code --install-extension markdown-preview-enhanced
 code --install-extension yzane.markdown-pdf
 ```
